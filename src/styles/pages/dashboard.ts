@@ -59,3 +59,54 @@ export const BoxLogout = styled.div`
     border-radius: 10px;
   }
 `;
+
+export const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 25px;
+    background-color: ${({ theme: { colors } }) => colors.colorWhite};
+  }
+`;
+
+export const MainContent = styled.main`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme: { colors } }) => colors.colorGray};
+  display: flex;
+`;
+
+export const ContainerTransactions = styled.div`
+  padding: 50px;
+  width: 100%;
+`;
+
+export const OneRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      width: 24px;
+    }
+
+    span {
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+export const ContainerGraphic = styled.div`
+  width: 100px;
+  border: 1px solid red;
+`;

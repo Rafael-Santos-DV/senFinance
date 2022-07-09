@@ -8,6 +8,7 @@ const theme = {
     colorRadiusModelDark: '#403A3A',
     colorRadiusModelLight: '#FBDA73',
     colorRed: '#FC0D0D',
+    colorGreen: '#16C113',
   },
 };
 
