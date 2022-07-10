@@ -64,12 +64,15 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme: { colors } }) => colors.colorGray};
+  padding-bottom: 20px;
 
   > div {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 10px 25px;
+
     background-color: ${({ theme: { colors } }) => colors.colorWhite};
   }
 `;
@@ -81,32 +84,49 @@ export const MainContent = styled.main`
   display: flex;
 `;
 
-export const ContainerTransactions = styled.div`
-  padding: 50px;
-  width: 100%;
+export const ContainerGraphic = styled.div`
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 100%;
+  background-color: ${({ theme: { colors } }) => colors.colorWhite};
 `;
 
-export const OneRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 50px;
+export const ContainerAnalitc = styled.div`
+  background-color: ${({ theme: { colors } }) => colors.colorBlue};
+  padding: 15px;
+  border-radius: 10px;
 
-  div {
+  > div {
     display: flex;
     align-items: center;
     gap: 10px;
-
-    img {
-      width: 24px;
-    }
-
-    span {
-      font-size: 1.2rem;
-    }
   }
-`;
 
-export const ContainerGraphic = styled.div`
-  width: 100px;
-  border: 1px solid red;
+  span {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  strong {
+    color: ${({ theme: { colors } }) => colors.colorWhite};
+    font-size: 0.9rem;
+  }
+
+  span.transactions {
+    color: #000;
+  }
+
+  span.amount {
+    color: #15fe10;
+  }
+
+  span.outputs {
+    color: ${({ theme: { colors } }) => colors.colorRed};
+  }
+
+  span.inputs {
+    color: ${({ theme: { colors } }) => colors.colorGreen};
+  }
 `;

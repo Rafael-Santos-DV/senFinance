@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components';
 
-export const Row = styled.tbody``;
-
 export const Name = styled.strong`
   font-size: 0.9rem;
 `;

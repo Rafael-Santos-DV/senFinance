@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row } from './style';
 
 import { BoxCategory, BoxType, Date, EditAndInfo, Name, Price } from './style';
 
@@ -17,6 +16,8 @@ interface RowTypes {
   type: 'input' | 'output';
   price: number;
   date: string;
+  onClickShow: () => void;
+  onClickEdit: () => void;
 }
 
 export const RowTable: React.FC<RowTypes> = ({
@@ -25,43 +26,61 @@ export const RowTable: React.FC<RowTypes> = ({
   type,
   price,
   date,
+  onClickShow,
+  onClickEdit,
 }) => {
   return (
-    <Row>
-      <tr>
-        <td>
-          <Name>{name}</Name>
-        </td>
-        <td>
-          <BoxCategory>
-            {category === 'PIX' && <img src={pix.src} alt="Pix" />}
-            {category === 'TED' && <img src={ted.src} alt="Ted" />}
-            {category === 'ESPECIE' && <img src={especie.src} alt="Espécie" />}
-            <span>{category}</span>
-          </BoxCategory>
-        </td>
-        <td>
-          <BoxType type={type}>
-            {type === 'input' ? 'Entrada' : 'Saída'}
-          </BoxType>
-        </td>
-        <td>
-          {type === 'input' ? (
-            <Price type={'input'}>{price}</Price>
-          ) : (
-            <Price type={'output'}>-{price}</Price>
-          )}
-        </td>
-        <td>
-          <Date>{date}</Date>
-        </td>
-        <td>
-          <EditAndInfo>
-            <img src={iconInfo.src} alt="Informações" title="Informações" />
-            <img src={iconEdit.src} alt="Editar" title="Editar" />
-          </EditAndInfo>
-        </td>
-      </tr>
-    </Row>
+    <tr>
+      <td>
+        <Name>{name}</Name>
+      </td>
+      <td>
+        <BoxCategory>
+          {category === 'PIX' && <img src={pix.src} alt="Pix" />}
+          {category === 'TED' && <img src={ted.src} alt="Ted" />}
+          {category === 'ESPECIE' && <img src={especie.src} alt="Espécie" />}
+          <span>{category}</span>
+        </BoxCategory>
+      </td>
+      <td>
+        <BoxType type={type}>{type === 'input' ? 'Entrada' : 'Saída'}</BoxType>
+      </td>
+      <td>
+        {type === 'input' ? (
+          <Price type={'input'}>
+            {price.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
+          </Price>
+        ) : (
+          <Price type={'output'}>
+            {price.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
+          </Price>
+        )}
+      </td>
+      <td>
+        <Date>{date}</Date>
+      </td>
+      <td>
+        <EditAndInfo>
+          <img
+            src={iconInfo.src}
+            alt="Informações"
+            title="Informações"
+            onClick={onClickShow}
+          />
+          <img
+            src={iconEdit.src}
+            alt="Editar"
+            title="Editar"
+            onClick={onClickEdit}
+          />
+        </EditAndInfo>
+      </td>
+    </tr>
   );
 };

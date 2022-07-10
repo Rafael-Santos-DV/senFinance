@@ -1,76 +1,47 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding-top: 40px;
+  margin-top: 20px;
+  height: 55vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme: { colors } }) =>
+      colors.colorBlackTransparent};
+    border-radius: 30px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme: { colors } }) => colors.colorAside};
+    border-radius: 30px;
+  }
 `;
 
 export const Table = styled.table`
   width: 100%;
   max-width: 500px;
+  position: relative;
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: ${({ theme: { colors } }) => colors.colorGray};
+  }
 
   th {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.9rem;
+    padding-bottom: 5px;
   }
 
   td {
-    padding: 20px;
+    padding: 10px 20px;
+    /* border: 1px solid red; */
   }
-`;
-
-export const Name = styled.strong`
-  font-size: 0.9rem;
-`;
-
-export const BoxCategory = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-export const BoxType = styled.div<{ type: 'input' | 'output' }>`
-  border-radius: 10px;
-  padding: 5px 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-align: center;
-
-  ${(props) =>
-    props.type === 'input'
-      ? css`
-          background-color: ${({ theme: { colors } }) => colors.colorWhite};
-          border: 1px solid ${({ theme: { colors } }) => colors.colorGreen};
-          color: ${({ theme: { colors } }) => colors.colorGreen};
-        `
-      : css`
-          /* background-color: ${({ theme: { colors } }) => colors.colorRed}; */
-          border: 1px solid ${({ theme: { colors } }) => colors.colorRed};
-          color: ${({ theme: { colors } }) => colors.colorRed};
-        `}
-`;
-
-export const Price = styled.strong<{ type: 'input' | 'output' }>`
-  font-weight: bold;
-
-  ${(props) =>
-    props.type === 'input'
-      ? css`
-          color: ${({ theme: { colors } }) => colors.colorGreen};
-        `
-      : css`
-          color: ${({ theme: { colors } }) => colors.colorRed};
-        `}
-`;
-
-export const Date = styled.div`
-  color: ${({ theme: { colors } }) => colors.colorBlue};
-  font-weight: bold;
-`;
-
-export const EditAndInfo = styled.div`
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  cursor: pointer;
 `;

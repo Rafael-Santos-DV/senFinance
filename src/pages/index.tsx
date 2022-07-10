@@ -1,36 +1,62 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
+import React, { useState } from 'react';
+
 import {
   BoxLogout,
   BoxSelect,
   Container,
+  ContainerAnalitc,
   ContainerGraphic,
   ContainerLogo,
-  ContainerTransactions,
   Content,
   MainContent,
   Menu,
-  OneRow,
   SidebarInformations,
 } from '../styles/pages/dashboard';
 
-// images
+// icons
 import logo from '../assets/logo-white.svg';
 import iconDashboard from '../assets/icon-dash.svg';
 import iconTransac from '../assets/icon-transac.svg';
 import iconConfig from '../assets/icon-config.svg';
-import iconFilter from '../assets/icon-filter.svg';
 
 import Button from '../components/Button/button';
 import { SelectModel } from '../components/SelectModel/SelectModel';
 import { Perfil } from '../components/Perfil/Perfil';
-import { Transactions } from '../components/Transactions/Transactions';
+
+import { Chart } from 'react-google-charts';
+import { AllTransactions } from '../components/AllTransactions/AllTransactions';
+import { NewTransaction } from '../components/NewTransaction/NewTransaction';
+import { Settings } from '../components/Settings/Settings';
+
+type TypeRouter = 'dashboard' | 'newTransaction' | 'settings';
 
 const Dashboard: React.FC<NextPage> = () => {
+  const [filter, setFilter] = useState(false);
+  const [getRouter, setRouter] = useState<TypeRouter>('dashboard');
+
+  const [options, setOptions] = useState({
+    title: 'Média de transações',
+  });
+  const [data, setData] = useState([
+    ['Transações', '100'],
+    ['Entrada', 70],
+    ['Saída', 30],
+  ]);
+
+  const handleChangeActiveFilter = () => {
+    setFilter((prev) => !prev);
+  };
+
+  const handleChangeRouter = (router: TypeRouter) => {
+    setRouter(router);
+  };
+
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Dashboard</title>
         <meta name="description" content="Dashboard SenFinança" />
       </Head>
 
@@ -41,17 +67,26 @@ const Dashboard: React.FC<NextPage> = () => {
           </ContainerLogo>
 
           <Menu>
-            <BoxSelect title="Dashboard">
+            <BoxSelect
+              title="Dashboard"
+              onClick={() => handleChangeRouter('dashboard')}
+            >
               <img src={iconDashboard.src} alt="Dashboard" />
               <span>Dashboard</span>
             </BoxSelect>
 
-            <BoxSelect title="Nova Transação">
+            <BoxSelect
+              title="Nova Transação"
+              onClick={() => handleChangeRouter('newTransaction')}
+            >
               <img src={iconTransac.src} alt="Transação" />
               <span>Nova Transação</span>
             </BoxSelect>
 
-            <BoxSelect title="Configurações">
+            <BoxSelect
+              title="Configurações"
+              onClick={() => handleChangeRouter('settings')}
+            >
               <img src={iconConfig.src} alt="Configurações" />
               <span>Configurações</span>
             </BoxSelect>
@@ -71,20 +106,57 @@ const Dashboard: React.FC<NextPage> = () => {
             />
           </div>
           <MainContent>
-            <ContainerTransactions>
-              <OneRow>
-                <h1>Transações</h1>
+            {getRouter === 'dashboard' && (
+              <AllTransactions
+                filter={filter}
+                handleChangeActiveFilter={handleChangeActiveFilter}
+              />
+            )}
+
+            {getRouter === 'newTransaction' && <NewTransaction />}
+
+            {getRouter === 'settings' && (
+              <Settings
+                email="santos@gmail"
+                name="RAfae"
+                password="883hf77"
+                avatar="https://"
+              />
+            )}
+
+            <ContainerGraphic>
+              <div>
+                <Chart
+                  width={'250px'}
+                  height={'150px'}
+                  chartType="PieChart"
+                  data={data}
+                  options={options}
+                />
+              </div>
+
+              <ContainerAnalitc>
+                <div>
+                  <strong>Total de entradas: </strong>
+                  <span className="inputs">2</span>
+                </div>
 
                 <div>
-                  <img src={iconFilter.src} alt="Filter" />
-                  <span>Filtros</span>
+                  <strong>Total de saídas: </strong>
+                  <span className="outputs">2</span>
                 </div>
-              </OneRow>
 
-              <Transactions />
-            </ContainerTransactions>
+                <div>
+                  <strong>Q. de transações: </strong>
+                  <span className="transactions">2</span>
+                </div>
 
-            <ContainerGraphic></ContainerGraphic>
+                <div>
+                  <strong>Total: </strong>
+                  <span className="amount">$2</span>
+                </div>
+              </ContainerAnalitc>
+            </ContainerGraphic>
           </MainContent>
         </Content>
       </Container>
