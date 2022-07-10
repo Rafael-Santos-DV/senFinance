@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const Images = require("next-images");
+const Images = require('next-images');
 
 const withImages = Images({
   esModule: true,
@@ -11,6 +11,9 @@ const withImages = Images({
 const nextConfig = {
   reactStrictMode: true,
   withImages,
+  api: {
+    responseLimit: false,
+  },
 };
 
 module.exports = nextConfig;

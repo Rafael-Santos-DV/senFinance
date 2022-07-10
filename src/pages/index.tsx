@@ -68,6 +68,7 @@ const Dashboard: React.FC<NextPage> = () => {
 
           <Menu>
             <BoxSelect
+              className={getRouter === 'dashboard' ? 'border' : ''}
               title="Dashboard"
               onClick={() => handleChangeRouter('dashboard')}
             >
@@ -76,6 +77,7 @@ const Dashboard: React.FC<NextPage> = () => {
             </BoxSelect>
 
             <BoxSelect
+              className={getRouter === 'newTransaction' ? 'border' : ''}
               title="Nova Transação"
               onClick={() => handleChangeRouter('newTransaction')}
             >
@@ -84,6 +86,7 @@ const Dashboard: React.FC<NextPage> = () => {
             </BoxSelect>
 
             <BoxSelect
+              className={getRouter === 'settings' ? 'border' : ''}
               title="Configurações"
               onClick={() => handleChangeRouter('settings')}
             >

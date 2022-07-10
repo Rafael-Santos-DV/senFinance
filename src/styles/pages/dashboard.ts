@@ -35,6 +35,10 @@ export const BoxSelect = styled.div`
   &:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
+
+  &.border {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  }
 `;
 
 export const BoxLogout = styled.div`
