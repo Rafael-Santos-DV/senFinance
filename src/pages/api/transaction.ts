@@ -62,7 +62,7 @@ export default async function transaction(
   const { id } = req.query;
 
   if (req.method === 'DELETE') {
-    await database.deleteOne({ adminId: id });
+    await database.deleteOne({ _id: id });
 
     return res.status(200).json({});
   }

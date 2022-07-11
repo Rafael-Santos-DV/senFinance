@@ -67,6 +67,26 @@ export const EditTransaction: React.FC<EditType> = ({
     }
   };
 
+  const handleChangeRemove = async (id: string) => {
+    try {
+      await Axios({
+        baseURL: `api/transaction?token=ok&id=${id}`,
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            't-register-platform'
+          )}`,
+        },
+      });
+
+      setRefresh((prev) => !prev);
+
+      removeCard();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <Container
       className={className || ''}
@@ -167,7 +187,12 @@ export const EditTransaction: React.FC<EditType> = ({
         </Content>
 
         <ContainerPush>
-          <Button className="delete">Excluir</Button>
+          <Button
+            className="delete"
+            onClick={() => handleChangeRemove(transactionId)}
+          >
+            Excluir
+          </Button>
           <Button
             className="update"
             type="button"
