@@ -117,6 +117,7 @@ export const EditTransaction: React.FC<EditType> = ({
   };
 
   const handleChangeRemove = async (id: string) => {
+    setAwaitResponse(true);
     try {
       await Axios({
         baseURL: `api/transaction?token=ok&id=${id}`,
@@ -128,11 +129,12 @@ export const EditTransaction: React.FC<EditType> = ({
         },
       });
 
+      setAwaitResponse(false);
       setRefresh((prev) => !prev);
       removeCard();
     } catch (err) {
       setErro('Erro ao processar!');
-
+      setAwaitResponse(false);
       return removeErro();
     }
   };
