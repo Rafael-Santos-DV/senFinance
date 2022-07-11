@@ -141,7 +141,7 @@ const Dashboard: React.FC<NextPage> = () => {
   };
 
   const handleLogout = () => {
-    localStorage.getItem('t-register-platform');
+    localStorage.removeItem('t-register-platform');
     Router.push('/login');
   };
 

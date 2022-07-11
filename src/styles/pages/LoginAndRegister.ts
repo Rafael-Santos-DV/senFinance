@@ -25,7 +25,6 @@ export const ContainerLeft = styled.aside`
 
 export const ContentLogo = styled.div`
   width: 100%;
-
   background-color: ${({ theme: { colors } }) => colors.colorWhite};
   padding: 10px;
   display: flex;
@@ -44,7 +43,10 @@ export const ContentLogo = styled.div`
   }
 
   img {
+    padding: 10px;
+    width: 100%;
     margin: 0 auto;
+    max-width: 300px;
   }
 `;
 
@@ -128,13 +130,25 @@ export const BoxInput = styled.div`
     }
   }
 
+  @media screen and (max-width: 800px) {
+    label {
+      flex-direction: column;
+      gap: 5px;
+
+      input {
+        padding: 15px 8px;
+        max-width: 100%;
+      }
+    }
+  }
+
   @media screen and (max-width: 468px) {
     label {
       flex-direction: column;
       gap: 5px;
 
       input {
-        padding: 4px 6px;
+        padding: 14px 8px;
         max-width: 100%;
       }
     }
