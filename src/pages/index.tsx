@@ -229,14 +229,15 @@ const Dashboard: React.FC<NextPage> = () => {
             )}
 
             {getRouter === 'newTransaction' && (
-              <NewTransaction className="children-main" />
+              <NewTransaction
+                className={`children-main ${getModel ? 'color-light' : ''}`}
+              />
             )}
 
             {getRouter === 'settings' && (
               <Settings
-                className={`children-main ${
-                  darkModel ? 'color-light color-dark' : ''
-                }`}
+                className={`children-main ${darkModel ? 'color-light' : ''}`}
+                classForm={darkModel}
                 clientId={getUser?.id ?? ''}
                 email={getUser?.email ?? ''}
                 name={getUser?.name ?? ''}

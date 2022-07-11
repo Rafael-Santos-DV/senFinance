@@ -11,6 +11,7 @@ type TypeSettings = {
   password: string;
   clientId: string;
   className: string;
+  classForm?: boolean;
 };
 
 export const Settings: React.FC<TypeSettings> = ({
@@ -20,6 +21,7 @@ export const Settings: React.FC<TypeSettings> = ({
   password,
   clientId,
   className,
+  classForm,
 }) => {
   const [getForm, setForm] = useState<Record<string, unknown>>({
     avatar,
@@ -59,7 +61,10 @@ export const Settings: React.FC<TypeSettings> = ({
   return (
     <Container className={className}>
       <h1>Configurações</h1>
-      <BoxForm onSubmit={handleSubmit}>
+      <BoxForm
+        onSubmit={handleSubmit}
+        className={classForm ? 'color-dark' : ''}
+      >
         <Label>
           <span>Nome</span>
           <input
