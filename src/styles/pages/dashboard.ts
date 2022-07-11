@@ -1,9 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
   display: flex;
   height: 100vh;
+
+  @media screen and (max-width: 500px) {
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 `;
 
 export const SidebarInformations = styled.aside`
@@ -19,6 +26,7 @@ export const SidebarInformations = styled.aside`
       display: flex;
       position: absolute;
       left: 0;
+      top: 0;
       height: 100vh;
       z-index: 999;
       flex-direction: column;

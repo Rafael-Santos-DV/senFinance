@@ -6,6 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   h1 {
     font-size: 2rem;
@@ -22,11 +23,17 @@ export const Container = styled.div`
     padding: 25px;
     border-radius: 10px;
     gap: 20px;
+  }
 
-    @media screen and (max-width: 420px) {
+  @media screen and (max-width: 420px) {
+    form {
       max-width: 100%;
       justify-content: center;
       align-items: center;
+    }
+
+    h1 {
+      font-size: 1.5rem;
     }
   }
 `;
