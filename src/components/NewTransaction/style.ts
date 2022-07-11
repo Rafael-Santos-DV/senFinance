@@ -22,6 +22,12 @@ export const Container = styled.div`
     padding: 25px;
     border-radius: 10px;
     gap: 20px;
+
+    @media screen and (max-width: 420px) {
+      max-width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 
@@ -57,6 +63,20 @@ export const ContainerInput = styled.div`
       border: 1px solid ${({ theme: { colors } }) => colors.colorBlue};
       padding: 5px;
       outline: none;
+    }
+  }
+
+  @media screen and (max-width: 420px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+    place-items: center;
+
+    label {
+      max-width: 100%;
+
+      input {
+        padding: 15px 10px;
+      }
     }
   }
 `;
