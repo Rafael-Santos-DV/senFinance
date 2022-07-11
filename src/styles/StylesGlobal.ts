@@ -7,6 +7,8 @@ export const StylesGlobal = createGlobalStyle`
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
         scroll-behavior: smooth;
+        transition: color 200ms ease, background-color 200ms ease-in-out;
+
     }
 
     html, body {
