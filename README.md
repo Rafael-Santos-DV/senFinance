@@ -33,7 +33,22 @@
   <img src="https://img.shields.io/badge/-Next.JS-%23000000" alt="Next.JS">
 </div>
 
+## Possíveis Features
+
+[] Mais verificações nas entradas de dados
+[] Testes Unitários
+[] Integrar token público
+[] Mais Acessibildade
+
 ## Instalação
+
+```bash
+git clone https://github.com/Rafael-Santos-DV/senFinance.git
+```
+
+```bash
+cd senFinance
+```
 
 ```bash
 yarn install
