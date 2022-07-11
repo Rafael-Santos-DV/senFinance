@@ -22,12 +22,20 @@ export const BoxForm = styled.form`
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  padding: 20px 0;
+  background-color: ${({ theme: { colors } }) => colors.colorGray};
 
   button {
-    padding: 5px;
+    padding: 8px;
     max-width: 200px;
     font-size: 0.7rem;
     margin-top: 20px;
+  }
+
+  @media screen and (max-width: 468px) {
+    button {
+      padding: 10px;
+    }
   }
 `;
 
@@ -58,5 +66,22 @@ export const Label = styled.label`
 
   em {
     font-size: 0.6rem;
+  }
+
+  @media screen and (max-width: 468px) {
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+
+    div {
+      text-align: center;
+      /* width: 100%; */
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 10px;
+    }
   }
 `;

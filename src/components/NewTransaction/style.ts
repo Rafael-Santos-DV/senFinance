@@ -37,6 +37,12 @@ export const BoxTypeAndCategory = styled.div`
   gap: 20%;
   text-align: center;
   text-transform: capitalize;
+
+  @media screen and (max-width: 468px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const ContainerInput = styled.div`
@@ -98,6 +104,12 @@ export const Category = styled.div`
     align-items: center;
     justify-content: space-between;
   }
+
+  @media screen and (max-width: 468px) {
+    width: 100%;
+    max-width: 200px;
+    padding-top: 20px;
+  }
 `;
 
 export const Typetransaction = styled(Category)``;
@@ -117,6 +129,19 @@ export const ContainerSubmitOrCancel = styled.div`
 
     &.cancel {
       background-color: ${({ theme: { colors } }) => colors.colorRed};
+    }
+  }
+
+  @media screen and (max-width: 468px) {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    button {
+      width: 100%;
+      max-width: 350px;
+      padding: 10px;
     }
   }
 `;

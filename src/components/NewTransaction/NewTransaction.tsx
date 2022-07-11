@@ -52,6 +52,10 @@ export const NewTransaction: React.FC<{ className: string }> = ({
     }
   };
 
+  const handleChangeCancel = () => {
+    setInfo({ category: '', type: '', name: '', price: '', title: '' });
+  };
+
   return (
     <Container className={className}>
       <h1>Nova Transação</h1>
@@ -63,6 +67,7 @@ export const NewTransaction: React.FC<{ className: string }> = ({
               type="text"
               name="name"
               required
+              value={getInfo.name}
               onChange={handleChangeNewTransaction}
             />
           </label>
@@ -72,6 +77,7 @@ export const NewTransaction: React.FC<{ className: string }> = ({
               type="text"
               name="title"
               required
+              value={getInfo.title}
               onChange={handleChangeNewTransaction}
             />
           </label>
@@ -81,6 +87,7 @@ export const NewTransaction: React.FC<{ className: string }> = ({
               type="text"
               name="price"
               required
+              value={getInfo.price}
               onChange={handleChangeNewTransaction}
             />
           </label>
@@ -145,7 +152,7 @@ export const NewTransaction: React.FC<{ className: string }> = ({
         </BoxTypeAndCategory>
 
         <ContainerSubmitOrCancel>
-          <Button className="cancel" type="button">
+          <Button className="cancel" type="button" onClick={handleChangeCancel}>
             Cancelar
           </Button>
           <Button className="create" type="submit">
