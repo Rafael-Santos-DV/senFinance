@@ -37,6 +37,19 @@
  <img src="https://img.shields.io/badge/-React-%2300CDF2" alt="React.JS">
 </div>
 
+## Features - required
+
+- [x] Adicionar, editar e excluir uma transação;
+- [x] Visualizar as transações em uma tabela;
+- [x] Visualizar o total das transações de entrada, saída e o total da conta (entradas - saídas);
+- [x] Filtro 1: O primeiro filtro deverá filtrar as transações com relação ao tipo
+      (entrada/saída/todas))
+- [x] Filtro 2: O segundo filtro deverá filtrar as transações com relação a sua categoria.
+- [x] layout: [figma](https://www.figma.com/file/pDFQE7WMgH0MKmOTfXGwnN/prototipo-finance)
+- [x] ContextAPI
+- [x] Banco de dados
+- [ ] Testes
+
 ## Possíveis Features
 
 - [ ] Mais verificações nas entradas de dados
