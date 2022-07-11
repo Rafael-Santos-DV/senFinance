@@ -33,12 +33,16 @@
   <img src="https://img.shields.io/badge/-Next.JS-%23000000" alt="Next.JS">
 </div>
 
+<div>
+ <img src="https://img.shields.io/badge/-React-%2300CDF2" alt="React.JS">
+</div>
+
 ## Possíveis Features
 
-- [] Mais verificações nas entradas de dados
-- [] Testes Unitários
-- [] Integrar token público
-- [] Mais Acessibildade
+- [ ] Mais verificações nas entradas de dados
+- [ ] Testes Unitários
+- [ ] Integrar token público
+- [ ] Mais Acessibildade
 
 ## Instalação
 
