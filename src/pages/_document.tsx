@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body id="body-id-js">
           <Main />
           <NextScript />
         </body>

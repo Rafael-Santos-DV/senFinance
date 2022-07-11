@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import Axios from '../lib/api/axios';
 
@@ -42,8 +43,6 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
     type: 'all',
   });
 
-  console.log(filter);
-
   useEffect(() => {
     let newData = null;
 
@@ -79,7 +78,7 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
       (async () => {
         try {
           const { data } = await Axios({
-            baseURL: 'api/transaction?token=ok',
+            baseURL: 'api/transaction?token=hash',
             method: 'GET',
             headers: {
               authorization: `Bearer ${localStorage.getItem(
@@ -89,6 +88,7 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
           });
 
           setData(data as TypeTransactions[]);
+          Router.push('/');
         } catch (err) {
           console.log(err);
         }
@@ -97,7 +97,7 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
       (async () => {
         try {
           const { data } = await Axios({
-            baseURL: 'api/register?token=ok',
+            baseURL: 'api/register?token=hash',
             method: 'GET',
             headers: {
               authorization: `Bearer ${localStorage.getItem(

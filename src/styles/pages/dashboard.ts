@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -11,7 +11,28 @@ export const SidebarInformations = styled.aside`
   padding: 25px 35px;
 
   @media screen and (max-width: 768px) {
-    display: none;
+    &.disabled {
+      display: none;
+    }
+
+    &.active-mobile {
+      display: flex;
+      position: absolute;
+      left: 0;
+      height: 100vh;
+      z-index: 999;
+      flex-direction: column;
+      animation: animation-show 200ms ease;
+    }
+
+    @keyframes animation-show {
+      0% {
+        transform: translate(-100%);
+      }
+      100% {
+        transform: translate(0%);
+      }
+    }
   }
 `;
 
@@ -82,18 +103,51 @@ export const Content = styled.div`
   > div {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 10px 25px;
 
     background-color: ${({ theme: { colors } }) => colors.colorWhite};
   }
 `;
 
+export const ContainerMobile = styled.div`
+  opacity: 0;
+
+  &.mobile-remove {
+    display: none;
+  }
+
+  img {
+    width: 50px;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    opacity: 1;
+    display: flex;
+
+    &.mobile-remove {
+      display: flex;
+      padding: 20px 0;
+
+      img {
+        width: 3rem;
+      }
+    }
+  }
+`;
+
 export const MainContent = styled.main`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme: { colors } }) => colors.colorGray};
+
   display: flex;
+
+  background-color: ${({ theme: { colors } }) => colors.colorGray};
+
+  &.DarkModel {
+    background-color: ${({ theme: { colors } }) => colors.colorDarkModeMaster};
+  }
 
   @media screen and (max-width: 990px) {
     flex-direction: column;

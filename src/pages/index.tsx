@@ -9,6 +9,7 @@ import {
   ContainerAnalitc,
   ContainerGraphic,
   ContainerLogo,
+  ContainerMobile,
   Content,
   MainContent,
   Menu,
@@ -23,6 +24,8 @@ import logo from '../assets/logo-white.svg';
 import iconDashboard from '../assets/icon-dash.svg';
 import iconTransac from '../assets/icon-transac.svg';
 import iconConfig from '../assets/icon-config.svg';
+import iconMenu from '../assets/icon-menu.svg';
+import iconRemove from '../assets/icon-remove.svg';
 
 import Button from '../components/Button/button';
 import { SelectModel } from '../components/SelectModel/SelectModel';
@@ -33,12 +36,15 @@ import { AllTransactions } from '../components/AllTransactions/AllTransactions';
 import { NewTransaction } from '../components/NewTransaction/NewTransaction';
 import { Settings } from '../components/Settings/Settings';
 import { DataContextProvider } from '../context/DataProvider';
+import Router from 'next/router';
 
 type TypeRouter = 'dashboard' | 'newTransaction' | 'settings';
 
 const Dashboard: React.FC<NextPage> = () => {
   const [filter, setFilter] = useState(false);
   const [getRouter, setRouter] = useState<TypeRouter>('dashboard');
+
+  const [menu, setMenu] = useState(false);
 
   const { getUser, transactions } = useContext(DataContextProvider);
 
@@ -58,6 +64,14 @@ const Dashboard: React.FC<NextPage> = () => {
     ['Entrada', amountTransactions.amountInput],
     ['Saída', amountTransactions.amountOutput],
   ]);
+
+  useEffect(() => {
+    if (!localStorage.getItem('t-register-platform')) {
+      Router.push('/login');
+    }
+
+    // implementar verificação de token
+  }, []);
 
   useEffect(() => {
     const amountInput =
@@ -101,6 +115,9 @@ const Dashboard: React.FC<NextPage> = () => {
 
   const handleChangeRouter = (router: TypeRouter) => {
     setRouter(router);
+
+    // remover sidebar mobile
+    handleClickActiveMenu();
   };
 
   const formatMoney = (money: number) => {
@@ -108,6 +125,24 @@ const Dashboard: React.FC<NextPage> = () => {
       style: 'currency',
       currency: 'BRL',
     });
+  };
+
+  const handleClickActiveMenu = () => {
+    const body = document.querySelector('#body-id-js');
+
+    if (menu) {
+      body?.classList.remove('body-hidden');
+      setMenu((prev) => !prev);
+      return;
+    }
+
+    body?.classList.add('body-hidden');
+    setMenu((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    localStorage.getItem('t-register-platform');
+    Router.push('/login');
   };
 
   return (
@@ -118,7 +153,13 @@ const Dashboard: React.FC<NextPage> = () => {
       </Head>
 
       <Container>
-        <SidebarInformations>
+        <SidebarInformations className={menu ? 'active-mobile' : 'disabled'}>
+          <ContainerMobile
+            onClick={handleClickActiveMenu}
+            className="mobile-remove"
+          >
+            <img src={iconRemove.src} alt="Ativar menu" />
+          </ContainerMobile>
           <ContainerLogo>
             <img src={logo.src} alt="SenFinança" />
           </ContainerLogo>
@@ -154,12 +195,15 @@ const Dashboard: React.FC<NextPage> = () => {
 
           <BoxLogout>
             <SelectModel />
-            <Button>Sair</Button>
+            <Button onClick={handleLogout}>Sair</Button>
           </BoxLogout>
         </SidebarInformations>
 
         <Content>
           <div>
+            <ContainerMobile onClick={handleClickActiveMenu}>
+              <img src={iconMenu.src} alt="Ativar menu" />
+            </ContainerMobile>
             <Perfil
               name={getUser?.name ?? 'Empty'}
               avatar={getUser?.avatar ?? placeholderImage}
