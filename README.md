@@ -35,10 +35,10 @@
 
 ## Possíveis Features
 
-[] Mais verificações nas entradas de dados
-[] Testes Unitários
-[] Integrar token público
-[] Mais Acessibildade
+- [] Mais verificações nas entradas de dados
+- [] Testes Unitários
+- [] Integrar token público
+- [] Mais Acessibildade
 
 ## Instalação
 
