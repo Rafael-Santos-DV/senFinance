@@ -113,8 +113,17 @@ export const Content = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px 25px;
+    align-items: center;
 
     background-color: ${({ theme: { colors } }) => colors.colorWhite};
+
+    > div.model {
+      display: none;
+
+      @media screen and (max-width: 768px) {
+        display: flex;
+      }
+    }
   }
 `;
 
@@ -152,10 +161,6 @@ export const MainContent = styled.main`
   display: flex;
 
   background-color: ${({ theme: { colors } }) => colors.colorGray};
-
-  &.DarkModel {
-    background-color: ${({ theme: { colors } }) => colors.colorDarkModeMaster};
-  }
 
   @media screen and (max-width: 990px) {
     flex-direction: column;

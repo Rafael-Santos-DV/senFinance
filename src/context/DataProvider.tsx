@@ -27,6 +27,8 @@ type TypeDataContext = {
   getUser: TypeUser | undefined;
   setFilter: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
+  getModel: boolean;
+  setModel: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const DataContextProvider = createContext({} as TypeDataContext);
@@ -39,6 +41,8 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
   const [data, setData] = useState<TypeTransactions[]>();
   const [transactions, setTransactions] = useState<TypeTransactions[]>();
   const [getUser, setUser] = useState<TypeUser>();
+
+  const [getModel, setModel] = useState(false);
 
   const [getRefresh, setRefresh] = useState<boolean>(false);
 
@@ -94,7 +98,8 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
           setData(data as TypeTransactions[]);
           Router.push('/');
         } catch (err) {
-          console.log(err);
+          localStorage.removeItem('t-register-platform');
+          Router.push('/login');
         }
       })();
 
@@ -112,7 +117,9 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
 
           setUser(data as TypeUser);
         } catch (err) {
-          alert(err);
+          // localStorage.removeItem('t-register-platform');
+          // Router.push('/login');
+          console.log(err);
         }
       })();
     }
@@ -120,7 +127,14 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
 
   return (
     <DataContextProvider.Provider
-      value={{ transactions, getUser, setFilter, setRefresh }}
+      value={{
+        transactions,
+        getUser,
+        setFilter,
+        setRefresh,
+        getModel,
+        setModel,
+      }}
     >
       {children}
     </DataContextProvider.Provider>

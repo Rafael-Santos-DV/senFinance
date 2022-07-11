@@ -9,7 +9,9 @@ export const SelectStyle = styled.div<{ activeModel: boolean }>`
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
-  padding: 2px;
+  padding: 4px;
+  border: 1px solid ${({ theme: { colors } }) => colors.colorRadiusModelDark};
+  height: 20px;
 
   &::before {
     content: '';

@@ -10,7 +10,7 @@ export const Transactions: React.FC = () => {
   const [activeEdit, setEdit] = useState('null');
   const refTable = useRef(null);
 
-  const { transactions } = useContext(DataContextProvider);
+  const { transactions, getModel } = useContext(DataContextProvider);
 
   useEffect(() => {
     if (refTable.current) {
@@ -47,7 +47,7 @@ export const Transactions: React.FC = () => {
     <Container ref={refTable}>
       <Table>
         <thead>
-          <tr>
+          <tr className={getModel ? 'color-light color-dark' : ''}>
             <th>Nome</th>
             <th>Categoria</th>
             <th>Tipo</th>
@@ -60,6 +60,7 @@ export const Transactions: React.FC = () => {
             transactions.map((transaction) => (
               <>
                 <RowTable
+                  dark={getModel}
                   key={transaction._id}
                   category={transaction.category}
                   date={transaction.dateCreated}

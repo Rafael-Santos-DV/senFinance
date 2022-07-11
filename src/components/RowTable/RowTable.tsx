@@ -17,6 +17,7 @@ interface RowTypes {
   type: 'input' | 'output';
   price: number;
   date: string;
+  dark: boolean;
   onClickShow: () => void;
   onClickEdit: () => void;
 }
@@ -27,11 +28,12 @@ export const RowTable: React.FC<RowTypes> = ({
   type,
   price,
   date,
+  dark,
   onClickShow,
   onClickEdit,
 }) => {
   return (
-    <tr>
+    <tr className={dark ? 'color-light' : ''}>
       <td>
         <Name>{name}</Name>
       </td>

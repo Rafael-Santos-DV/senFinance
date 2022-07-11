@@ -22,4 +22,13 @@ export const StylesGlobal = createGlobalStyle`
         overflow: hidden;
       }
     }
+
+    .color-light {
+      color: ${({ theme: { colors } }) => colors.colorWhite};
+    }
+
+    &.color-dark {
+    background-color: ${({ theme: { colors } }) =>
+      colors.colorDarkModeMaster} !important;
+  }
 `;

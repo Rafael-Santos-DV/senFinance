@@ -46,13 +46,14 @@ export const NewTransaction: React.FC<{ className: string }> = ({
         },
       });
 
+      handleChangeClear();
       setRefresh((prev) => !prev);
     } catch (err) {
       alert(err);
     }
   };
 
-  const handleChangeCancel = () => {
+  const handleChangeClear = () => {
     setInfo({ category: '', type: '', name: '', price: '', title: '' });
   };
 
@@ -152,7 +153,7 @@ export const NewTransaction: React.FC<{ className: string }> = ({
         </BoxTypeAndCategory>
 
         <ContainerSubmitOrCancel>
-          <Button className="cancel" type="button" onClick={handleChangeCancel}>
+          <Button className="cancel" type="button" onClick={handleChangeClear}>
             Cancelar
           </Button>
           <Button className="create" type="submit">

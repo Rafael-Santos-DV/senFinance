@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 import { SelectStyle } from './style';
 
 export const SelectModel: React.FC = () => {
-  const [active, setActive] = useState(false);
+  const { setModel, getModel } = useContext(DataContextProvider);
+
   const handleChangeModel = () => {
-    setActive((prev) => !prev);
+    setModel((prev) => !prev);
   };
 
-  return <SelectStyle activeModel={active} onClick={handleChangeModel} />;
+  return (
+    <SelectStyle
+      className={`model`}
+      activeModel={getModel}
+      onClick={handleChangeModel}
+    />
+  );
 };

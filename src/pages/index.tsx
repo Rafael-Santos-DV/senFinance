@@ -46,7 +46,10 @@ const Dashboard: React.FC<NextPage> = () => {
 
   const [menu, setMenu] = useState(false);
 
-  const { getUser, transactions } = useContext(DataContextProvider);
+  const [darkModel, setDarkModel] = useState(false);
+
+  const { getUser, transactions, getModel, setModel } =
+    useContext(DataContextProvider);
 
   const [amountTransactions, setAmountTransactions] = useState({
     amountInput: 0,
@@ -71,7 +74,9 @@ const Dashboard: React.FC<NextPage> = () => {
     }
 
     // implementar verificação de token
-  }, []);
+
+    setDarkModel(getModel);
+  }, [getModel]);
 
   useEffect(() => {
     const amountInput =
@@ -199,17 +204,21 @@ const Dashboard: React.FC<NextPage> = () => {
           </BoxLogout>
         </SidebarInformations>
 
-        <Content>
-          <div>
+        <Content className={`${darkModel ? 'color-dark' : ''}`}>
+          <div className={darkModel ? 'color-dark' : ''}>
             <ContainerMobile onClick={handleClickActiveMenu}>
               <img src={iconMenu.src} alt="Ativar menu" />
             </ContainerMobile>
+
+            <SelectModel />
+
             <Perfil
+              className={darkModel ? 'color-light' : ''}
               name={getUser?.name ?? 'Empty'}
               avatar={getUser?.avatar ?? placeholderImage}
             />
           </div>
-          <MainContent>
+          <MainContent className={`${darkModel ? 'color-dark' : ''}`}>
             {getRouter === 'dashboard' && (
               <AllTransactions
                 isMobile={false}
@@ -225,7 +234,9 @@ const Dashboard: React.FC<NextPage> = () => {
 
             {getRouter === 'settings' && (
               <Settings
-                className="children-main"
+                className={`children-main ${
+                  darkModel ? 'color-light color-dark' : ''
+                }`}
                 clientId={getUser?.id ?? ''}
                 email={getUser?.email ?? ''}
                 name={getUser?.name ?? ''}

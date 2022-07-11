@@ -5,6 +5,8 @@ import { ContainerTransactions, OneRow } from './style';
 // icons
 import iconFilter from '../../assets/icon-filter.svg';
 import iconRemove from '../../assets/icon-remove.svg';
+import { useContext, useEffect, useState } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 
 interface TypeTransaction {
   filter: boolean;
@@ -19,10 +21,17 @@ export const AllTransactions: React.FC<TypeTransaction> = ({
   className,
   isMobile,
 }) => {
+  const { getModel } = useContext(DataContextProvider);
+  // const [model, setModel] = useState(getModel);
+
+  // useEffect(() => {
+  //   setModel(getModel);
+  // }, [getModel]);
+
   return (
     <ContainerTransactions className={className}>
       <OneRow>
-        <h1>Transações</h1>
+        <h1 className={getModel ? 'color-light' : ''}>Transações</h1>
 
         <div onClick={handleChangeActiveFilter}>
           <img
@@ -37,7 +46,7 @@ export const AllTransactions: React.FC<TypeTransaction> = ({
             style={{ display: filter ? 'initial' : 'none' }}
           />
 
-          <span>Filtros</span>
+          <span className={`${getModel ? 'color-light' : ''}`}>Filtros</span>
         </div>
       </OneRow>
 

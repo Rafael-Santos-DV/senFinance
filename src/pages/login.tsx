@@ -106,7 +106,11 @@ const Login: React.FC = () => {
               </BoxInput>
 
               <ContainerButtons>
-                <Button type="button" className="button-google">
+                <Button
+                  type="button"
+                  className="button-google"
+                  onClick={() => alert('Em breve')}
+                >
                   <img src={logoGoogle.src} alt="Google" />
                   <strong>Entrar com Google</strong>
                 </Button>
