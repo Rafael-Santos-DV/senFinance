@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
 import { BoxForm, Container, Label } from './style';
@@ -26,6 +27,8 @@ export const Settings: React.FC<TypeSettings> = ({
     password,
   });
 
+  const { setRefresh } = useContext(DataContextProvider);
+
   const handleChangeSetForm = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -35,14 +38,22 @@ export const Settings: React.FC<TypeSettings> = ({
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    await Axios({
-      baseURL: `api/register?token=ok&id=${clientId}`,
-      method: 'PUT',
-      data: getForm,
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('t-register-platform')}`,
-      },
-    });
+    try {
+      await Axios({
+        baseURL: `api/register?token=ok&id=${clientId}`,
+        method: 'PUT',
+        data: getForm,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            't-register-platform'
+          )}`,
+        },
+      });
+
+      setRefresh((prev) => !prev);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (

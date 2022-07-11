@@ -26,6 +26,7 @@ type TypeDataContext = {
   transactions: TypeTransactions[] | undefined;
   getUser: TypeUser | undefined;
   setFilter: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const DataContextProvider = createContext({} as TypeDataContext);
@@ -38,6 +39,9 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
   const [data, setData] = useState<TypeTransactions[]>();
   const [transactions, setTransactions] = useState<TypeTransactions[]>();
   const [getUser, setUser] = useState<TypeUser>();
+
+  const [getRefresh, setRefresh] = useState<boolean>(false);
+
   const [filter, setFilter] = useState<Record<string, string>>({
     category: 'all',
     type: 'all',
@@ -112,10 +116,12 @@ export const DataProvider: React.FC<DataType> = ({ children }) => {
         }
       })();
     }
-  }, []);
+  }, [getRefresh]);
 
   return (
-    <DataContextProvider.Provider value={{ transactions, getUser, setFilter }}>
+    <DataContextProvider.Provider
+      value={{ transactions, getUser, setFilter, setRefresh }}
+    >
       {children}
     </DataContextProvider.Provider>
   );

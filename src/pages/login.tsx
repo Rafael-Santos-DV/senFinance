@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import {
   BoxForm,
   BoxInput,
@@ -19,9 +19,12 @@ import logoGoogle from '../assets/logo-google.svg';
 import Link from 'next/link';
 import Axios from '../lib/api/axios';
 import Router from 'next/router';
+import { DataContextProvider } from '../context/DataProvider';
 
 const Login: React.FC = () => {
   const [getForm, setForm] = useState<Record<string, unknown>>();
+
+  const { setRefresh } = useContext(DataContextProvider);
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -45,6 +48,9 @@ const Login: React.FC = () => {
       }
 
       localStorage.setItem('t-register-platform', data.token);
+
+      setRefresh((prev) => !prev);
+
       Router.push('/');
     } catch (err) {
       console.log(err);

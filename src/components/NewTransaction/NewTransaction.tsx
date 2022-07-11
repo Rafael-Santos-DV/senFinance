@@ -1,4 +1,6 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import Router from 'next/router';
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
 import {
@@ -21,6 +23,8 @@ export const NewTransaction: React.FC<{ className: string }> = ({
     title: '',
   });
 
+  const { setRefresh } = useContext(DataContextProvider);
+
   const handleChangeNewTransaction = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: eventName, value } = event.target;
 
@@ -41,6 +45,8 @@ export const NewTransaction: React.FC<{ className: string }> = ({
           )}`,
         },
       });
+
+      setRefresh((prev) => !prev);
     } catch (err) {
       alert(err);
     }

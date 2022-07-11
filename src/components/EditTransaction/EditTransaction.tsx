@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
 import {
@@ -35,6 +36,8 @@ export const EditTransaction: React.FC<EditType> = ({
 }) => {
   const [getInfo, setInfo] = useState({ category, type, name, price, title });
 
+  const { setRefresh } = useContext(DataContextProvider);
+
   const handleChangeCategoryAndType = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
@@ -55,6 +58,8 @@ export const EditTransaction: React.FC<EditType> = ({
           )}`,
         },
       });
+
+      setRefresh((prev) => !prev);
 
       removeCard();
     } catch (err) {
