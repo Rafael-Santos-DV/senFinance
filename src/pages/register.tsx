@@ -61,6 +61,7 @@ const Register: React.FC = () => {
       return;
     }
 
+    setAwaitResponse(true);
     try {
       const { data } = await Axios({
         baseURL: 'api/register?token=ok',

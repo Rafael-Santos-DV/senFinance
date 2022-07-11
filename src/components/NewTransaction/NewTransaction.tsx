@@ -3,6 +3,8 @@ import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { DataContextProvider } from '../../context/DataProvider';
 import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
+import { Feedback } from '../Feedback/Feedback';
+import { Loading } from '../Loading/Loading';
 import {
   BoxTypeAndCategory,
   Category,
@@ -25,14 +27,56 @@ export const NewTransaction: React.FC<{ className: string }> = ({
 
   const { setRefresh } = useContext(DataContextProvider);
 
+  const [awaitResponse, setAwaitResponse] = useState(false);
+  const [getErro, setErro] = useState('');
+
   const handleChangeNewTransaction = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: eventName, value } = event.target;
 
     setInfo((prev) => ({ ...prev, [eventName]: value }));
   };
 
+  const removeErro = () => {
+    const clear = setTimeout(() => {
+      setErro('');
+    }, 1200);
+    return () => clearTimeout(clear);
+  };
+
   const handleChangeSubmitTransaction = async (event: FormEvent) => {
     event.preventDefault();
+
+    if (!getInfo.category) {
+      setErro('Informe a categoria.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.name) {
+      setErro('Nome vazio.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.price || isNaN(Number(getInfo.price))) {
+      setErro('Preço inválido.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.title) {
+      setErro('Título está vazio.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.type) {
+      setErro('Informe o tipo.');
+
+      return removeErro();
+    }
+
+    setAwaitResponse(true);
 
     try {
       await Axios({
@@ -48,8 +92,11 @@ export const NewTransaction: React.FC<{ className: string }> = ({
 
       handleChangeClear();
       setRefresh((prev) => !prev);
+      setAwaitResponse(false);
+      Router.push('/');
     } catch (err) {
-      alert(err);
+      setAwaitResponse(false);
+      setErro('Erro ao processar!');
     }
   };
 
@@ -151,6 +198,9 @@ export const NewTransaction: React.FC<{ className: string }> = ({
             </label>
           </Typetransaction>
         </BoxTypeAndCategory>
+
+        {getErro && <Feedback text={getErro} type="Error" />}
+        {awaitResponse && <Loading />}
 
         <ContainerSubmitOrCancel>
           <Button className="cancel" type="button" onClick={handleChangeClear}>

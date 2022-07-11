@@ -111,9 +111,10 @@ export const Content = styled.div`
   > div {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px 25px;
     align-items: center;
+    column-gap: 40px;
 
     background-color: ${({ theme: { colors } }) => colors.colorWhite};
 

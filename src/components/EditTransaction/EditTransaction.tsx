@@ -2,6 +2,8 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { DataContextProvider } from '../../context/DataProvider';
 import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
+import { Feedback } from '../Feedback/Feedback';
+import { Loading } from '../Loading/Loading';
 import {
   BoxInputs,
   Category,
@@ -36,6 +38,11 @@ export const EditTransaction: React.FC<EditType> = ({
 }) => {
   const [getInfo, setInfo] = useState({ category, type, name, price, title });
 
+  const [awaitResponse, setAwaitResponse] = useState(false);
+  const [getErro, setErro] = useState('');
+
+  const [getSucess, setSucess] = useState('');
+
   const { setRefresh } = useContext(DataContextProvider);
 
   const handleChangeCategoryAndType = (
@@ -46,7 +53,46 @@ export const EditTransaction: React.FC<EditType> = ({
     setInfo((prev) => ({ ...prev, [eventName]: value }));
   };
 
+  const removeErro = () => {
+    const clear = setTimeout(() => {
+      setErro('');
+    }, 1200);
+    return () => clearTimeout(clear);
+  };
+
   const handleChangeUpdate = async (id: string) => {
+    if (!getInfo.category) {
+      setErro('Informe a categoria.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.name) {
+      setErro('Nome vazio.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.price || isNaN(Number(getInfo.price))) {
+      setErro('Preço inválido.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.title) {
+      setErro('Título está vazio.');
+
+      return removeErro();
+    }
+
+    if (!getInfo.type) {
+      setErro('Informe o tipo.');
+
+      return removeErro();
+    }
+
+    setAwaitResponse(true);
+
     try {
       await Axios({
         baseURL: `api/transaction?token=ok&id=${id}`,
@@ -60,10 +106,13 @@ export const EditTransaction: React.FC<EditType> = ({
       });
 
       setRefresh((prev) => !prev);
-
+      setSucess('Atualizado com sucesso!');
+      setAwaitResponse(false);
       removeCard();
     } catch (err) {
-      alert(err);
+      setErro('Erro ao processar!');
+
+      return removeErro();
     }
   };
 
@@ -80,10 +129,11 @@ export const EditTransaction: React.FC<EditType> = ({
       });
 
       setRefresh((prev) => !prev);
-
       removeCard();
     } catch (err) {
-      alert(err);
+      setErro('Erro ao processar!');
+
+      return removeErro();
     }
   };
 
@@ -185,6 +235,9 @@ export const EditTransaction: React.FC<EditType> = ({
             </label>
           </OrdemType>
         </Content>
+
+        {getErro && <Feedback text={getErro} type="Error" />}
+        {awaitResponse && <Loading />}
 
         <ContainerPush>
           <Button
