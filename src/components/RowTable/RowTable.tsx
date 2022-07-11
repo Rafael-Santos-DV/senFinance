@@ -1,6 +1,7 @@
 import React from 'react';
+import { format } from 'date-fns';
 
-import { BoxCategory, BoxType, Date, EditAndInfo, Name, Price } from './style';
+import { BoxCategory, BoxType, DateC, EditAndInfo, Name, Price } from './style';
 
 // images
 import pix from '../../assets/icon-pix.svg';
@@ -12,7 +13,7 @@ import iconEdit from '../../assets/icon-edit.svg';
 
 interface RowTypes {
   name: string;
-  category: 'PIX' | 'TED' | 'ESPECIE';
+  category: 'PIX' | 'TED' | 'ESPECIE' | 'pix' | 'ted' | 'especie';
   type: 'input' | 'output';
   price: number;
   date: string;
@@ -63,7 +64,7 @@ export const RowTable: React.FC<RowTypes> = ({
         )}
       </td>
       <td>
-        <Date>{date}</Date>
+        <DateC>{format(new Date(date), 'dd/MM/yyyy')}</DateC>
       </td>
       <td>
         <EditAndInfo>

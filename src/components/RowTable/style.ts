@@ -2,6 +2,10 @@ import styled, { css } from 'styled-components';
 
 export const Name = styled.strong`
   font-size: 0.9rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+  }
 `;
 
 export const BoxCategory = styled.div`
@@ -29,6 +33,11 @@ export const BoxType = styled.div<{ type: 'input' | 'output' }>`
           border: 1px solid ${({ theme: { colors } }) => colors.colorRed};
           color: ${({ theme: { colors } }) => colors.colorRed};
         `}
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
 `;
 
 export const Price = styled.strong<{ type: 'input' | 'output' }>`
@@ -44,7 +53,7 @@ export const Price = styled.strong<{ type: 'input' | 'output' }>`
         `}
 `;
 
-export const Date = styled.div`
+export const DateC = styled.div`
   color: ${({ theme: { colors } }) => colors.colorBlue};
   font-weight: bold;
 `;
@@ -54,4 +63,12 @@ export const EditAndInfo = styled.div`
   gap: 20px;
   align-items: center;
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+
+    img {
+      width: 16px;
+    }
+  }
 `;

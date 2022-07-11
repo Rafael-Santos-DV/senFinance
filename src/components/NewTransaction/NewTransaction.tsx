@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
 import {
   BoxTypeAndCategory,
@@ -9,23 +10,73 @@ import {
   Typetransaction,
 } from './style';
 
-export const NewTransaction: React.FC = () => {
+export const NewTransaction: React.FC<{ className: string }> = ({
+  className,
+}) => {
+  const [getInfo, setInfo] = useState({
+    category: '',
+    type: '',
+    name: '',
+    price: '',
+    title: '',
+  });
+
+  const handleChangeNewTransaction = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name: eventName, value } = event.target;
+
+    setInfo((prev) => ({ ...prev, [eventName]: value }));
+  };
+
+  const handleChangeSubmitTransaction = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      await Axios({
+        baseURL: `api/transaction?token=ok`,
+        method: 'POST',
+        data: getInfo,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            't-register-platform'
+          )}`,
+        },
+      });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
-    <Container>
+    <Container className={className}>
       <h1>Nova Transação</h1>
-      <form>
+      <form onSubmit={handleChangeSubmitTransaction}>
         <ContainerInput>
           <label>
             <span>Nome</span>
-            <input type="text" name="name" required />
+            <input
+              type="text"
+              name="name"
+              required
+              onChange={handleChangeNewTransaction}
+            />
           </label>
           <label>
             <span>Título</span>
-            <input type="text" name="title" required />
+            <input
+              type="text"
+              name="title"
+              required
+              onChange={handleChangeNewTransaction}
+            />
           </label>
           <label>
             <span>Preço</span>
-            <input type="text" name="price" required />
+            <input
+              type="text"
+              name="price"
+              required
+              onChange={handleChangeNewTransaction}
+            />
           </label>
         </ContainerInput>
 
@@ -35,29 +86,54 @@ export const NewTransaction: React.FC = () => {
 
             <label>
               <span>pix</span>
-              <input type="radio" name="price" />
+              <input
+                type="radio"
+                value="pix"
+                name="category"
+                onChange={handleChangeNewTransaction}
+              />
             </label>
 
             <label>
               <span>ted</span>
-              <input type="radio" name="price" />
+              <input
+                type="radio"
+                name="category"
+                value="ted"
+                onChange={handleChangeNewTransaction}
+              />
             </label>
 
             <label>
               <span>especie</span>
-              <input type="radio" name="price" />
+              <input
+                type="radio"
+                name="category"
+                value="especie"
+                onChange={handleChangeNewTransaction}
+              />
             </label>
           </Category>
 
           <Typetransaction>
             <span>Tipo</span>
             <label>
-              <span>ted</span>
-              <input type="radio" name="type" value="ted" />
+              <span>Entrada</span>
+              <input
+                type="radio"
+                name="type"
+                value="input"
+                onChange={handleChangeNewTransaction}
+              />
             </label>
             <label>
-              <span>pix</span>
-              <input type="radio" name="type" value="pix" />
+              <span>Saída</span>
+              <input
+                type="radio"
+                name="type"
+                value="output"
+                onChange={handleChangeNewTransaction}
+              />
             </label>
           </Typetransaction>
         </BoxTypeAndCategory>

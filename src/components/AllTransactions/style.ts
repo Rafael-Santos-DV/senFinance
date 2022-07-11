@@ -4,6 +4,10 @@ export const ContainerTransactions = styled.div`
   padding: 5px 40px;
   width: 100%;
   overflow-y: hidden;
+
+  @media screen and (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
 export const OneRow = styled.div`
@@ -28,6 +32,16 @@ export const OneRow = styled.div`
 
     span {
       font-size: 1.2rem;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 20px;
+    justify-content: space-around;
+
+    h1 {
+      font-size: 1.3rem;
+      padding: 10px 0;
     }
   }
 `;

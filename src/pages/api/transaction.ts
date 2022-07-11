@@ -57,7 +57,7 @@ export default async function transaction(
     return res.status(200).json(data);
   }
 
-  const { title, price, category, type, name } = JSON.parse(req.body);
+  const { title, price, category, type, name } = req.body;
 
   const { id } = req.query;
 
@@ -70,7 +70,7 @@ export default async function transaction(
   if (req.method === 'PUT') {
     const response = await database.updateOne(
       {
-        adminId: id,
+        _id: id,
       },
       {
         title,
@@ -78,6 +78,7 @@ export default async function transaction(
         category,
         type,
         name,
+        lastUpdate: new Date(),
       }
     );
 

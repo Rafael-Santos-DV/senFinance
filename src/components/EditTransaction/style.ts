@@ -8,6 +8,7 @@ export const Container = styled.article`
   padding: 20px;
   border-radius: 10px;
   z-index: 99;
+  background-color: ${({ theme: { colors } }) => colors.colorAside};
 
   animation: show-information 200ms ease-in-out;
 
@@ -30,6 +31,20 @@ export const Container = styled.article`
     align-items: center;
     gap: 20px;
     margin: 0 auto;
+    color: ${({ theme: { colors } }) => colors.colorWhite};
+  }
+
+  @media screen and (max-width: 830px) {
+    max-width: 550px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  @media screen and (max-width: 468px) {
+    max-width: 300px;
   }
 `;
 

@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { DataContextProvider } from '../../context/DataProvider';
 import { EditTransaction } from '../EditTransaction/EditTransaction';
 import { Information } from '../InformationTransaction/Information';
 import { RowTable } from '../RowTable/RowTable';
 import { Container, Table } from './style';
 
 export const Transactions: React.FC = () => {
-  const [activeInfo, setInfo] = useState('null');
+  const [activeInfo, setInfo] = useState('none');
   const [activeEdit, setEdit] = useState('null');
   const refTable = useRef(null);
+
+  const { transactions } = useContext(DataContextProvider);
 
   useEffect(() => {
     if (refTable.current) {
@@ -21,26 +24,25 @@ export const Transactions: React.FC = () => {
     }
   }, [activeInfo, refTable]);
 
-  const handleActiveInfo = (id: string) => {
-    if (id === activeInfo) {
-      setInfo('null');
+  const handleActiveInfo = (id: string, flag: string) => {
+    if (flag + id === activeInfo) {
+      setInfo('none');
       return;
     }
 
     setEdit('null');
-    setInfo(id);
+    setInfo(`${flag}${id}`);
   };
 
-  const handleActiveEdit = (id: string) => {
-    if (id === activeEdit) {
+  const handleActiveEdit = (id: string, flag: string) => {
+    if (flag + id === activeEdit) {
       setEdit('null');
       return;
     }
 
-    setInfo('null');
-    setEdit(id);
+    setInfo('none');
+    setEdit(`${flag}${id}`);
   };
-
   return (
     <Container ref={refTable}>
       <Table>
@@ -54,36 +56,50 @@ export const Transactions: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <RowTable
-            category="TED"
-            date="02/11/2021"
-            name="Bartolomeuss"
-            price={100}
-            type="input"
-            onClickShow={() => handleActiveInfo('id')}
-            onClickEdit={() => handleActiveEdit('id')}
-          />
-          <Information
-            category="especie"
-            date="12/11/2022"
-            lastUpdate="13/11/2022"
-            name="Rafael"
-            price={200}
-            type="input"
-            title="leafar"
-            activeInformation={activeInfo === 'id' ? true : false}
-            className="id"
-          />
+          {transactions &&
+            transactions.map((transaction) => (
+              <>
+                <RowTable
+                  key={transaction._id}
+                  category={transaction.category}
+                  date={transaction.dateCreated}
+                  name={transaction.name}
+                  price={transaction.price}
+                  type={transaction.type}
+                  onClickShow={() => handleActiveInfo(transaction._id, 'c1-')}
+                  onClickEdit={() => handleActiveEdit(transaction._id, 'c2-')}
+                />
+                <Information
+                  key={transaction.title}
+                  category={transaction.category}
+                  date={transaction.dateCreated}
+                  lastUpdate={transaction.lastUpdate}
+                  name={transaction.name}
+                  price={transaction.price}
+                  type={transaction.type}
+                  title={transaction.title}
+                  activeInformation={
+                    activeInfo === `c1-${transaction._id}` ? true : false
+                  }
+                  className={`c1-${transaction._id}`}
+                />
 
-          <EditTransaction
-            category="ted"
-            name="Rafael"
-            price={200}
-            type="input"
-            title="leafar"
-            activeInformation={activeEdit === 'id' ? true : false}
-            className="id"
-          />
+                <EditTransaction
+                  removeCard={() => setEdit('null')}
+                  transactionId={transaction._id}
+                  key={transaction.type}
+                  category={transaction.category}
+                  name={transaction.name}
+                  price={transaction.price}
+                  type={transaction.type}
+                  title={transaction.title}
+                  activeInformation={
+                    activeEdit === `c2-${transaction._id}` ? true : false
+                  }
+                  className={`c2-${transaction._id}`}
+                />
+              </>
+            ))}
         </tbody>
       </Table>
     </Container>

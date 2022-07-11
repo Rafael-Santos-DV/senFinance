@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 
 import jwt from 'jsonwebtoken';
 
-import { AES as crypto } from 'crypto-js';
+import cryptoJs, { AES as crypto } from 'crypto-js';
 
 type TypeDatabase = mongoose.Model<any, any, any, any, any>;
 
@@ -76,6 +76,44 @@ export default async function register(
     return res.status(200).json({ sucess: 'Update with sucess' });
   }
 
+  if (req.method === 'GET') {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+      return res.status(400).json({ token: 'is empty' });
+    }
+
+    const jwtString = authorization.split(' ')[1];
+
+    try {
+      const JWT = jwt.verify(
+        jwtString,
+        String(process.env.HASH_JSON_WEBTOKEN)
+      ) as Record<string, string>;
+
+      const { id, email, avatar, password, name } = await database.findOne({
+        id: JWT.clientId,
+        email: JWT.email,
+      });
+
+      const passwordDecrypt = crypto
+        .decrypt(password, String(process.env.HASH_PASSWORD))
+        .toString(cryptoJs.enc.Utf8);
+
+      const data = {
+        id,
+        email,
+        avatar,
+        name: name,
+        password: passwordDecrypt,
+      };
+
+      return res.status(200).json(data);
+    } catch (err) {
+      return res.status(401).json({ message: 'Token is invalid' });
+    }
+  }
+
   const findEmail = await database.findOne({ email });
 
   if (findEmail) {
@@ -96,7 +134,7 @@ export default async function register(
   };
 
   const JWT = jwt.sign(
-    { clientId: data.id },
+    { clientId: data.id, email },
     String(process.env.HASH_JSON_WEBTOKEN),
     {
       expiresIn: '1h',

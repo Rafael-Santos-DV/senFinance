@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import {
   BoxForm,
   BoxInput,
@@ -17,8 +17,42 @@ import dashboardHome from '../assets/dashboard-home.svg';
 import Button from '../components/Button/button';
 import logoGoogle from '../assets/logo-google.svg';
 import Link from 'next/link';
+import Axios from '../lib/api/axios';
+import Router from 'next/router';
 
 const Login: React.FC = () => {
+  const [getForm, setForm] = useState<Record<string, unknown>>();
+
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setForm((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleChangeSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await Axios({
+        baseURL: 'api/login?token=ok',
+        method: 'POST',
+        data: getForm,
+      });
+
+      if (!data.token) {
+        alert('usuário ou senha inválidos!');
+        return;
+      }
+
+      localStorage.setItem('t-register-platform', data.token);
+      Router.push('/');
+    } catch (err) {
+      console.log(err);
+      alert('usuário ou senha inválidos!');
+      return;
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -34,7 +68,7 @@ const Login: React.FC = () => {
             <img src={logo.src} alt="SenFinança Logo" />
           </ContentLogo>
           <BoxForm>
-            <form>
+            <form onSubmit={handleChangeSubmit}>
               <h2>Login</h2>
               <p>
                 Por favor, coloque suas credenciais de login abaixo para começar
@@ -48,6 +82,7 @@ const Login: React.FC = () => {
                     type="email"
                     name="email"
                     required
+                    onChange={handleChangeInput}
                     autoComplete="off"
                   />
                 </label>
@@ -56,8 +91,9 @@ const Login: React.FC = () => {
                   <span>Senha</span>
                   <input
                     type="password"
-                    name="senha"
+                    name="password"
                     autoComplete="current-password"
+                    onChange={handleChangeInput}
                     required
                   />
                 </label>

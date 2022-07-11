@@ -42,4 +42,12 @@ export const Container = styled.article`
       transform: translateX(0%);
     }
   }
+
+  @media screen and (max-width: 830px) {
+    max-width: 550px;
+  }
+
+  @media screen and (max-width: 468px) {
+    max-width: 300px;
+  }
 `;

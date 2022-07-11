@@ -44,4 +44,15 @@ export const Table = styled.table`
     padding: 10px 20px;
     /* border: 1px solid red; */
   }
+
+  @media screen and (max-width: 768px) {
+    margin: 0 auto;
+    th {
+      font-size: 0.63rem;
+    }
+    td {
+      font-size: 0.6rem;
+      padding: 3px;
+    }
+  }
 `;

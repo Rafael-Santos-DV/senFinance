@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import {
   BoxForm,
   BoxInput,
@@ -16,8 +16,36 @@ import logo from '../assets/logo.svg';
 import dashboardHome from '../assets/dashboard-home.svg';
 import Button from '../components/Button/button';
 import Link from 'next/link';
+import Axios from '../lib/api/axios';
+import Router from 'next/router';
 
 const Register: React.FC = () => {
+  const [getForm, setForm] = useState<Record<string, unknown>>();
+
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setForm((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleChangeSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await Axios({
+        baseURL: 'api/register?token=ok',
+        method: 'POST',
+        data: getForm,
+      });
+
+      localStorage.setItem('t-register-platform', data.token);
+      Router.push('/');
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -34,7 +62,7 @@ const Register: React.FC = () => {
             <img src={logo.src} alt="SenFinança Logo" />
           </ContentLogo>
           <BoxForm>
-            <form>
+            <form onSubmit={handleChangeSubmit}>
               <h2>Criar Conta</h2>
               <p>
                 Por favor, coloque suas credenciais de login abaixo para começar
@@ -44,7 +72,13 @@ const Register: React.FC = () => {
               <BoxInput>
                 <label>
                   <span>Nome</span>
-                  <input type="text" name="name" required autoComplete="off" />
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    autoComplete="off"
+                    onChange={handleChangeInput}
+                  />
                 </label>
 
                 <label>
@@ -54,6 +88,7 @@ const Register: React.FC = () => {
                     name="email"
                     required
                     autoComplete="off"
+                    onChange={handleChangeInput}
                   />
                 </label>
 
@@ -61,7 +96,12 @@ const Register: React.FC = () => {
                   <span>
                     Perfil URL <em>(opcional)</em>
                   </span>
-                  <input type="text" name="perfil" autoComplete="off" />
+                  <input
+                    type="text"
+                    name="perfil"
+                    autoComplete="off"
+                    onChange={handleChangeInput}
+                  />
                 </label>
 
                 <label>
@@ -70,6 +110,7 @@ const Register: React.FC = () => {
                     type="password"
                     name="password"
                     autoComplete="current-password"
+                    onChange={handleChangeInput}
                     required
                   />
                 </label>

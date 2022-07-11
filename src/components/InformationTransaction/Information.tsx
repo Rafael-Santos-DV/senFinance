@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from './style';
+import { format } from 'date-fns';
 
 interface InformationType {
   title: string;
@@ -27,7 +28,9 @@ export const Information: React.FC<InformationType> = ({
   return (
     <Container
       className={className || ''}
-      style={{ display: activeInformation ? 'flex' : 'none' }}
+      style={{
+        display: activeInformation ? 'flex' : 'none',
+      }}
     >
       <div>
         <span>Título: </span>
@@ -56,11 +59,11 @@ export const Information: React.FC<InformationType> = ({
       </div>
       <div>
         <span>Data de criação: </span>
-        <strong>{date}</strong>
+        <strong>{format(new Date(date), 'yyyy-MM-dd')}</strong>
       </div>
       <div>
         <span>Última atualização: </span>
-        <strong>{lastUpdate}</strong>
+        <strong>{format(new Date(lastUpdate), 'yyyy-MM-dd')}</strong>
       </div>
     </Container>
   );

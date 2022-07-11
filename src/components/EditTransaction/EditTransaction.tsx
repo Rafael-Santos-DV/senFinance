@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import Axios from '../../lib/api/axios';
 import Button from '../Button/button';
 import {
   BoxInputs,
@@ -15,8 +16,10 @@ interface EditType {
   type: string;
   category: string;
   price: number;
+  transactionId: string;
   activeInformation: boolean;
   className?: string;
+  removeCard: () => void;
 }
 
 export const EditTransaction: React.FC<EditType> = ({
@@ -27,8 +30,10 @@ export const EditTransaction: React.FC<EditType> = ({
   activeInformation,
   className,
   price,
+  transactionId,
+  removeCard,
 }) => {
-  const [getInfo, setInfo] = useState({ category, type });
+  const [getInfo, setInfo] = useState({ category, type, name, price, title });
 
   const handleChangeCategoryAndType = (
     event: ChangeEvent<HTMLInputElement>
@@ -38,26 +43,60 @@ export const EditTransaction: React.FC<EditType> = ({
     setInfo((prev) => ({ ...prev, [eventName]: value }));
   };
 
-  console.log(getInfo);
+  const handleChangeUpdate = async (id: string) => {
+    try {
+      await Axios({
+        baseURL: `api/transaction?token=ok&id=${id}`,
+        method: 'PUT',
+        data: getInfo,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            't-register-platform'
+          )}`,
+        },
+      });
+
+      removeCard();
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   return (
     <Container
       className={className || ''}
-      style={{ display: activeInformation ? 'flex' : 'none' }}
+      style={{
+        display: activeInformation ? 'flex' : 'none',
+      }}
     >
       <div>
         <BoxInputs>
           <label className="name">
             <span>Nome</span>
-            <input type="text" name="nome" defaultValue={name} />
+            <input
+              type="text"
+              name="name"
+              defaultValue={name}
+              onChange={handleChangeCategoryAndType}
+            />
           </label>
           <label>
             <span>Título</span>
-            <input type="text" name="title" defaultValue={title} />
+            <input
+              type="text"
+              name="title"
+              defaultValue={title}
+              onChange={handleChangeCategoryAndType}
+            />
           </label>
           <label>
             <span>Preço</span>
-            <input type="text" name="price" defaultValue={price} />
+            <input
+              type="text"
+              name="price"
+              defaultValue={price}
+              onChange={handleChangeCategoryAndType}
+            />
           </label>
         </BoxInputs>
 
@@ -124,7 +163,13 @@ export const EditTransaction: React.FC<EditType> = ({
 
         <ContainerPush>
           <Button className="delete">Excluir</Button>
-          <Button className="update">Atualizar</Button>
+          <Button
+            className="update"
+            type="button"
+            onClick={() => handleChangeUpdate(transactionId)}
+          >
+            Atualizar
+          </Button>
         </ContainerPush>
       </div>
     </Container>

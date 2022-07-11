@@ -9,14 +9,18 @@ import iconRemove from '../../assets/icon-remove.svg';
 interface TypeTransaction {
   filter: boolean;
   handleChangeActiveFilter: () => void;
+  className: string;
+  isMobile: boolean;
 }
 
 export const AllTransactions: React.FC<TypeTransaction> = ({
   handleChangeActiveFilter,
   filter,
+  className,
+  isMobile,
 }) => {
   return (
-    <ContainerTransactions>
+    <ContainerTransactions className={className}>
       <OneRow>
         <h1>Transações</h1>
 
@@ -39,7 +43,7 @@ export const AllTransactions: React.FC<TypeTransaction> = ({
 
       <Filter active={filter} />
 
-      <Transactions />
+      {!isMobile && <Transactions />}
     </ContainerTransactions>
   );
 };

@@ -9,6 +9,10 @@ export const Container = styled.div`
 export const SidebarInformations = styled.aside`
   background-color: ${({ theme: { colors } }) => colors.colorAside};
   padding: 25px 35px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const ContainerLogo = styled.div``;
@@ -18,6 +22,10 @@ export const Menu = styled.div`
   flex-direction: column;
   gap: 10px;
   padding-top: 60px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 30px;
+  }
 `;
 
 export const BoxSelect = styled.div`
@@ -86,6 +94,15 @@ export const MainContent = styled.main`
   height: 100%;
   background-color: ${({ theme: { colors } }) => colors.colorGray};
   display: flex;
+
+  @media screen and (max-width: 990px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .children-main {
+      order: 2;
+    }
+  }
 `;
 
 export const ContainerGraphic = styled.div`
@@ -95,12 +112,37 @@ export const ContainerGraphic = styled.div`
   width: 30%;
   height: 100%;
   background-color: ${({ theme: { colors } }) => colors.colorWhite};
+
+  @media screen and (max-width: 990px) {
+    width: 100%;
+    flex-direction: row;
+    height: auto;
+    justify-content: center;
+  }
+
+  > div {
+    width: 100%;
+  }
+  @media screen and (max-width: 468px) {
+    flex-direction: column;
+
+    > div {
+      margin: 0 auto;
+      max-width: 320px;
+      display: flex;
+      justify-content: center;
+    }
+  }
 `;
 
 export const ContainerAnalitc = styled.div`
   background-color: ${({ theme: { colors } }) => colors.colorBlue};
   padding: 15px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 5px;
 
   > div {
     display: flex;
@@ -132,5 +174,13 @@ export const ContainerAnalitc = styled.div`
 
   span.inputs {
     color: ${({ theme: { colors } }) => colors.colorGreen};
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 10px;
+    strong,
+    span {
+      font-size: 0.6rem;
+    }
   }
 `;

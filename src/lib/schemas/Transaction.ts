@@ -16,8 +16,16 @@ const SchemaTransaction = new mongoose.Schema({
   type: {
     type: String,
   },
+  dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
   adminId: {
     type: String,
+  },
+  lastUpdate: {
+    type: Date,
+    default: Date.now,
   },
 });
 

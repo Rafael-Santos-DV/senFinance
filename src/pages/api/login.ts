@@ -26,8 +26,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
   const { email, password: passwordClient } = req.body;
 
-  console.log(email);
-
   const user = await database.findOne({ email });
 
   if (!user) {
@@ -35,7 +33,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const jsonJWT = jwt.sign(
-    { clientId: user.id },
+    { clientId: user.id, email },
     String(process.env.HASH_JSON_WEBTOKEN),
     {
       expiresIn: '1h',
