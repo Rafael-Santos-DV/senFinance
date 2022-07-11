@@ -12,6 +12,12 @@ export const BoxCategory = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  img {
+    width: 20px;
+  }
 `;
 
 export const BoxType = styled.div<{ type: 'input' | 'output' }>`

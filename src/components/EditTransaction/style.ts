@@ -10,6 +10,11 @@ export const Container = styled.article`
   z-index: 99;
   background-color: ${({ theme: { colors } }) => colors.colorAside};
 
+  left: 0;
+  right: 0;
+
+  margin: 0 auto;
+
   animation: show-information 200ms ease-in-out;
 
   @keyframes show-information {
@@ -44,7 +49,7 @@ export const Container = styled.article`
   }
 
   @media screen and (max-width: 468px) {
-    max-width: 300px;
+    max-width: 340px;
   }
 `;
 

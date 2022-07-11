@@ -11,6 +11,8 @@ export const Container = styled.article`
   border-radius: 10px;
   margin: 0 auto;
   z-index: 99;
+  left: 0;
+  right: 0;
 
   animation: show-information 200ms ease-in-out;
 
@@ -48,6 +50,6 @@ export const Container = styled.article`
   }
 
   @media screen and (max-width: 468px) {
-    max-width: 300px;
+    max-width: 340px;
   }
 `;

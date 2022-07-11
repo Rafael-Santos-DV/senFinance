@@ -37,9 +37,11 @@ export const RowTable: React.FC<RowTypes> = ({
       </td>
       <td>
         <BoxCategory>
-          {category === 'PIX' && <img src={pix.src} alt="Pix" />}
-          {category === 'TED' && <img src={ted.src} alt="Ted" />}
-          {category === 'ESPECIE' && <img src={especie.src} alt="Espécie" />}
+          {category.toUpperCase() === 'PIX' && <img src={pix.src} alt="Pix" />}
+          {category.toUpperCase() === 'TED' && <img src={ted.src} alt="Ted" />}
+          {category.toUpperCase() === 'ESPECIE' && (
+            <img src={especie.src} alt="Espécie" />
+          )}
           <span>{category}</span>
         </BoxCategory>
       </td>

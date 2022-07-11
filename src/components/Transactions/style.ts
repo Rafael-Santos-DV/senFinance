@@ -25,6 +25,7 @@ export const Table = styled.table`
   width: 100%;
   max-width: 500px;
   position: relative;
+  text-align: center;
 
   thead {
     position: sticky;
