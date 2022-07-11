@@ -19,11 +19,21 @@ import Link from 'next/link';
 import Axios from '../lib/api/axios';
 import Router from 'next/router';
 import { DataContextProvider } from '../context/DataProvider';
+import { Feedback } from '../components/Feedback/Feedback';
+import { Loading } from '../components/Loading/Loading';
 
 const Register: React.FC = () => {
-  const [getForm, setForm] = useState<Record<string, unknown>>();
+  const [getForm, setForm] = useState({
+    name: '',
+    email: '',
+    avatar: '',
+    password: '',
+  });
 
   const { setRefresh } = useContext(DataContextProvider);
+
+  const [awaitResponse, setAwaitResponse] = useState(false);
+  const [getErro, setErro] = useState('');
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -34,6 +44,23 @@ const Register: React.FC = () => {
   const handleChangeSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    if (!getForm.email) {
+      setErro('Email está vazio!');
+      return;
+    }
+
+    const emailRegex = /\S+@\S+\.\S+/;
+
+    if (!emailRegex.test(getForm.email)) {
+      setErro('Email é inválido!');
+      return;
+    }
+
+    if (getForm.password.length < 8) {
+      setErro('Senha é inválida!');
+      return;
+    }
+
     try {
       const { data } = await Axios({
         baseURL: 'api/register?token=ok',
@@ -43,10 +70,17 @@ const Register: React.FC = () => {
 
       localStorage.setItem('t-register-platform', data.token);
       setRefresh((prev) => !prev);
+      setAwaitResponse(false);
       Router.push('/');
     } catch (err) {
-      console.log(err);
-      alert(err);
+      setAwaitResponse(false);
+      setErro(`E-mail já está em uso.`);
+
+      const clear = setTimeout(() => {
+        setErro(``);
+      }, 2000);
+
+      return () => clearTimeout(clear);
     }
   };
 
@@ -102,7 +136,7 @@ const Register: React.FC = () => {
                   </span>
                   <input
                     type="text"
-                    name="perfil"
+                    name="avatar"
                     autoComplete="off"
                     onChange={handleChangeInput}
                   />
@@ -119,6 +153,10 @@ const Register: React.FC = () => {
                   />
                 </label>
               </BoxInput>
+
+              {getErro && <Feedback text={getErro} type="Error" />}
+
+              {awaitResponse && <Loading />}
 
               <ContainerButtons className="container-register-buttons">
                 <Button type="submit">Criar Conta</Button>

@@ -20,9 +20,14 @@ import Link from 'next/link';
 import Axios from '../lib/api/axios';
 import Router from 'next/router';
 import { DataContextProvider } from '../context/DataProvider';
+import { Loading } from '../components/Loading/Loading';
+import { Feedback } from '../components/Feedback/Feedback';
 
 const Login: React.FC = () => {
   const [getForm, setForm] = useState<Record<string, unknown>>();
+
+  const [awaitResponse, setAwaitResponse] = useState(false);
+  const [getErro, setErro] = useState('');
 
   const { setRefresh } = useContext(DataContextProvider);
 
@@ -34,6 +39,7 @@ const Login: React.FC = () => {
 
   const handleChangeSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setAwaitResponse(true);
 
     try {
       const { data } = await Axios({
@@ -51,10 +57,11 @@ const Login: React.FC = () => {
 
       setRefresh((prev) => !prev);
 
+      setAwaitResponse(false);
       Router.push('/');
     } catch (err) {
-      console.log(err);
-      alert('usuário ou senha inválidos!');
+      setAwaitResponse(false);
+      setErro('Usuário ou senha inválidos!');
       return;
     }
   };
@@ -105,6 +112,8 @@ const Login: React.FC = () => {
                 </label>
               </BoxInput>
 
+              {getErro && <Feedback text={getErro} type="Error" />}
+
               <ContainerButtons>
                 <Button
                   type="button"
@@ -117,6 +126,8 @@ const Login: React.FC = () => {
                 <Button type="submit">Entrar</Button>
               </ContainerButtons>
             </form>
+
+            {awaitResponse && <Loading />}
 
             <Register>
               Não tem conta?
