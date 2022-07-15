@@ -248,13 +248,20 @@ const Dashboard: React.FC<NextPage> = () => {
 
             <ContainerGraphic>
               <div>
-                <Chart
-                  width={'250px'}
-                  height={'150px'}
-                  chartType="PieChart"
-                  data={data}
-                  options={options}
-                />
+                {amountTransactions.amount ? (
+                  <Chart
+                    width={'250px'}
+                    height={'150px'}
+                    chartType="PieChart"
+                    data={data}
+                    options={options}
+                  />
+                ) : (
+                  <div className="empty-transaction">
+                    <span>Média de transações</span>
+                    <div>Não há transações</div>
+                  </div>
+                )}
               </div>
 
               <ContainerAnalitc>

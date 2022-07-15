@@ -181,6 +181,32 @@ export const ContainerGraphic = styled.div`
   height: 100%;
   background-color: ${({ theme: { colors } }) => colors.colorWhite};
 
+  div.empty-transaction {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    > span {
+      font-size: 0.8rem;
+    }
+
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: ${({ theme: { colors } }) => colors.colorOverage};
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.6rem;
+      color: ${({ theme: { colors } }) => colors.colorWhite};
+    }
+  }
+
   @media screen and (max-width: 990px) {
     width: 100%;
     flex-direction: row;

@@ -10,6 +10,7 @@ const theme = {
     colorRed: '#FC0D0D',
     colorGreen: '#16C113',
     colorDarkModeMaster: '#1A2C47',
+    colorOverage: '#3366CC',
   },
 };
 
