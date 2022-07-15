@@ -37,6 +37,11 @@
  <img src="https://img.shields.io/badge/-React-%2300CDF2" alt="React.JS">
 </div>
 
+## implementations
+
+:white_check_mark: SERVERLESSS FUNCTIONS
+:white_check_mark: JWT
+
 ## Features - required
 
 - [x] Adicionar, editar e excluir uma transação;
