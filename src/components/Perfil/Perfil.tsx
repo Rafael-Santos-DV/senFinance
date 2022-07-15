@@ -13,6 +13,11 @@ export const Perfil: React.FC<PerfilType> = ({ name, avatar, className }) => {
   const [errImage, setImage] = useState(false);
 
   useEffect(() => {
+    if (!avatar) {
+      setImage(true);
+      return;
+    }
+
     setImage(false);
   }, [avatar]);
 
