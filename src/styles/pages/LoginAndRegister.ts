@@ -46,7 +46,7 @@ export const ContentLogo = styled.div`
     padding: 10px;
     width: 100%;
     margin: 0 auto;
-    max-width: 300px;
+    max-width: 200px;
   }
 `;
 
@@ -170,12 +170,12 @@ export const ContainerButtons = styled.div`
 
   button {
     width: 46%;
-    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     font-size: 0.8rem;
+    padding: 9px;
 
     img {
       width: 22px;
